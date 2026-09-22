@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cupcake Store</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark shadow">
+    <div class="container">
+        <a class="navbar-brand fw-bold" th:href="@{/}">🧁 Cupcake Store</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="menu">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" th:href="@{/}">Início</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/produtos}">Produtos</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/carrinho}">Carrinho</a></li>
+                <li class="nav-item" th:if="${session.clienteLogado == null}"><a class="nav-link" th:href="@{/login}">Login</a></li>
+                <li class="nav-item" th:if="${session.clienteLogado == null}"><a class="nav-link" th:href="@{/cadastro}">Cadastro</a></li>
+                <li class="nav-item" th:if="${session.clienteLogado != null}"><a class="nav-link" th:href="@{/logout}">Sair</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/admin/produtos}">Admin</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<header class="container mt-5">
+    <div class="p-5 rounded text-center banner">
+        <h1 class="display-4">Bem-vindo à Cupcake Store</h1>
+        <p class="lead mt-3">Cupcakes gourmet preparados com ingredientes selecionados e muito carinho.</p>
+        <a th:href="@{/produtos}" class="btn btn-cupcake btn-lg mt-3">Ver Cupcakes</a>
+    </div>
+</header>
+<section class="container mt-5">
+    <div class="row text-center">
+        <div class="col-md-4 mb-4"><div class="card cupcake-card h-100"><div class="card-body"><h3>🧁 Artesanais</h3><p>Produção artesanal com ingredientes frescos.</p></div></div></div>
+        <div class="col-md-4 mb-4"><div class="card cupcake-card h-100"><div class="card-body"><h3>🍓 Sabores Exclusivos</h3><p>Diversas opções para todos os gostos.</p></div></div></div>
+        <div class="col-md-4 mb-4"><div class="card cupcake-card h-100"><div class="card-body"><h3>🚚 Entrega Rápida</h3><p>Receba seus cupcakes com rapidez e segurança.</p></div></div></div>
+    </div>
+</section>
+<footer class="footer mt-5"><div class="container text-center py-3"><p class="mb-0">&copy; 2026 Cupcake Store - Projeto Integrador II</p></div></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/script.js}"></script>
+</body>
+</html>

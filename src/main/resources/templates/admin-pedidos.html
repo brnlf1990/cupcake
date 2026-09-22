@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Administração de Pedidos - Cupcake Store</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark shadow">
+      <div class="container">
+        <a class="navbar-brand fw-bold" th:href="@{/}">🧁 Cupcake Store</a>
+        <div class="ms-auto d-flex gap-3">
+          <a class="nav-link" th:href="@{/admin/produtos}"
+            >Produtos</a
+          ><a class="nav-link" th:href="@{/admin/pedidos}"
+            >Pedidos</a
+          >
+        </div>
+      </div>
+    </nav>
+    <div class="container mt-5">
+      <h2 class="mb-4">Gerenciamento de Pedidos</h2>
+      <div
+        th:if="${sucesso}"
+        class="alert alert-success"
+        th:text="${sucesso}"
+      ></div>
+      <div th:if="${erro}" class="alert alert-danger" th:text="${erro}"></div>
+      <div class="table-responsive">
+        <table class="table table-striped table-hover align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>ID</th>
+              <th>Cliente</th>
+              <th>Data</th>
+              <th>Total</th>
+              <th>Status</th>
+              <th>Alterar Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="pedido : ${pedidos}">
+              <td th:text="${pedido.id}"></td>
+              <td th:text="${pedido.cliente.nome}"></td>
+              <td
+                th:text="${#temporals.format(pedido.dataPedido, 'dd/MM/yyyy HH:mm')}"
+              ></td>
+              <td>
+                R$
+                <span
+                  th:text="${#numbers.formatDecimal(pedido.valorTotal,1,'POINT',2,'COMMA')}"
+                ></span>
+              </td>
+              <td>
+                <span
+                  class="badge bg-secondary"
+                  th:text="${pedido.status}"
+                ></span>
+              </td>
+              <td>
+                <form
+                  class="d-flex gap-2"
+                  th:action="@{/admin/pedidos/status/{id}(id=${pedido.id})}"
+                  method="post"
+                >
+                  <select name="status" class="form-select form-select-sm">
+                    <option
+                      value="Recebido"
+                      th:selected="${pedido.status == 'Recebido'}"
+                    >
+                      Recebido
+                    </option>
+                    <option
+                      value="Em preparo"
+                      th:selected="${pedido.status == 'Em preparo'}"
+                    >
+                      Em preparo
+                    </option>
+                    <option
+                      value="Saiu para entrega"
+                      th:selected="${pedido.status == 'Saiu para entrega'}"
+                    >
+                      Saiu para entrega
+                    </option>
+                    <option
+                      value="Entregue"
+                      th:selected="${pedido.status == 'Entregue'}"
+                    >
+                      Entregue
+                    </option></select
+                  ><button class="btn btn-sm btn-cupcake" type="submit">
+                    Atualizar
+                  </button>
+                </form>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <footer class="footer mt-5">
+      <div class="container text-center py-3">
+        <p class="mb-0">&copy; 2026 Cupcake Store</p>
+      </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/script.js}"></script>
+  </body>
+</html>

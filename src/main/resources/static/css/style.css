@@ -1,0 +1,16 @@
+body { background-color: #fff8f5; color: #4e342e; font-family: Arial, Helvetica, sans-serif; }
+.navbar { background: linear-gradient(90deg, #d81b60, #8d6e63); }
+.navbar-brand { font-size: 1.5rem; font-weight: bold; }
+.nav-link { color: #fff !important; transition: .3s; }
+.nav-link:hover { color: #ffe4ec !important; }
+.banner { background: linear-gradient(135deg, #f8bbd0, #fce4ec); border-radius: 15px; padding: 60px 30px; }
+.banner h1 { color: #880e4f; font-weight: bold; }
+.btn-cupcake { background-color: #d81b60; color: #fff; border: none; transition: .3s; }
+.btn-cupcake:hover { background-color: #ad1457; color: #fff; }
+.cupcake-card { border: none; border-radius: 15px; overflow: hidden; transition: transform .25s; }
+.cupcake-card:hover { transform: translateY(-5px); }
+.produto-placeholder { height: 220px; font-size: 5rem; background: linear-gradient(135deg, #fce4ec, #efebe9); }
+.card { border-radius: 15px; }
+.card-header { background-color: #f8bbd0; color: #5d4037; font-weight: bold; }
+.footer { margin-top: 60px; background-color: #8d6e63; color: white; }
+@media (max-width: 768px) { .banner { padding: 40px 20px; } .banner h1 { font-size: 2rem; } .navbar-brand { font-size: 1.2rem; } .produto-placeholder { height: 180px; } }
