@@ -18,4 +18,16 @@ public class ProdutoService {
     public Optional<Produto> buscarPorId(Long id) { return produtoRepository.findById(id); }
     public Produto salvar(Produto produto) { return produtoRepository.save(produto); }
     public void excluir(Long id) { produtoRepository.deleteById(id); }
+    public List<Produto> listarAtivos() {
+    return produtoRepository.findByAtivoTrue();
+}
+
+    public void alterarStatus(Long id) {
+    Produto produto = produtoRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+
+    produto.setAtivo(!produto.isAtivo());
+
+    produtoRepository.save(produto);
+}
 }

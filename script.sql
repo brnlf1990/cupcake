@@ -54,3 +54,6 @@ WHERE NOT EXISTS (SELECT 1 FROM produto WHERE nome = 'Cupcake Red Velvet');
 INSERT INTO produto (nome, descricao, preco, estoque, imagem)
 SELECT 'Cupcake Limão', 'Cupcake de limão com cobertura cítrica.', 11.90, 18, 'limao.jpg'
 WHERE NOT EXISTS (SELECT 1 FROM produto WHERE nome = 'Cupcake Limão');
+
+UPDATE produto
+SET ativo = 0;

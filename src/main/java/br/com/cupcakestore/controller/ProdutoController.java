@@ -23,7 +23,7 @@ public class ProdutoController {
 
     @GetMapping("/produtos")
     public String listarProdutos(Model model) {
-        model.addAttribute("produtos", produtoService.listarTodos());
+        model.addAttribute("produtos", produtoService.listarAtivos());
         return "produtos";
     }
 
@@ -75,4 +75,9 @@ public class ProdutoController {
         redirectAttributes.addFlashAttribute("sucesso", "Produto excluído com sucesso.");
         return "redirect:/admin/produtos";
     }
+    @PostMapping("/admin/produtos/status/{id}")
+public String alterarStatus(@PathVariable Long id) {
+    produtoService.alterarStatus(id);
+    return "redirect:/admin/produtos";
+}
 }

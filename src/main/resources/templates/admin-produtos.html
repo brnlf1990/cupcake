@@ -1,38 +1,57 @@
+
 <!doctype html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Administração de Produtos - Cupcake Store</title>
+
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
     <link rel="stylesheet" th:href="@{/css/style.css}" />
   </head>
+
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark shadow">
       <div class="container">
-        <a class="navbar-brand fw-bold" th:href="@{/}">🧁 Cupcake Store</a>
-          <div class="ms-auto d-flex gap-3">
-          <a class="nav-link" th:href="@{/admin/produtos}"
-            >Produtos</a
-          ><a class="nav-link" th:href="@{/admin/pedidos}"
-            >Pedidos</a
-          >
+        <a class="navbar-brand fw-bold" th:href="@{/}">
+          🧁 Cupcake Store
+        </a>
+
+        <div class="ms-auto d-flex gap-3">
+          <a class="nav-link" th:href="@{/admin/produtos}">
+            Produtos
+          </a>
+          <a class="nav-link" th:href="@{/admin/pedidos}">
+            Pedidos
+          </a>
         </div>
       </div>
     </nav>
+
     <div class="container mt-5">
       <h2 class="mb-4">Gerenciamento de Produtos</h2>
+
       <div
         th:if="${sucesso}"
         class="alert alert-success"
         th:text="${sucesso}"
       ></div>
-      <div th:if="${erro}" class="alert alert-danger" th:text="${erro}"></div>
+
+      <div
+        th:if="${erro}"
+        class="alert alert-danger"
+        th:text="${erro}"
+      ></div>
+
+      <!-- Cadastro e edição -->
       <div class="card mb-4 shadow">
-        <div class="card-header"><h5 class="mb-0">Cadastro / Edição</h5></div>
+        <div class="card-header">
+          <h5 class="mb-0">Cadastro / Edição</h5>
+        </div>
+
         <div class="card-body">
           <form
             th:object="${produto}"
@@ -41,10 +60,11 @@
             data-validar="true"
           >
             <input type="hidden" th:field="*{id}" />
+
             <div class="row">
               <div class="col-md-6 mb-3">
-                <label class="form-label">Nome</label
-                ><input
+                <label class="form-label">Nome</label>
+                <input
                   type="text"
                   class="form-control"
                   th:field="*{nome}"
@@ -52,9 +72,10 @@
                 />
                 <div class="text-danger" th:errors="*{nome}"></div>
               </div>
+
               <div class="col-md-6 mb-3">
-                <label class="form-label">Preço</label
-                ><input
+                <label class="form-label">Preço</label>
+                <input
                   type="number"
                   min="0.01"
                   step="0.01"
@@ -65,18 +86,20 @@
                 <div class="text-danger" th:errors="*{preco}"></div>
               </div>
             </div>
+
             <div class="mb-3">
-              <label class="form-label">Descrição</label
-              ><textarea
+              <label class="form-label">Descrição</label>
+              <textarea
                 class="form-control"
                 rows="3"
                 th:field="*{descricao}"
               ></textarea>
             </div>
+
             <div class="row">
               <div class="col-md-6 mb-3">
-                <label class="form-label">Estoque</label
-                ><input
+                <label class="form-label">Estoque</label>
+                <input
                   type="number"
                   min="0"
                   class="form-control"
@@ -85,9 +108,10 @@
                 />
                 <div class="text-danger" th:errors="*{estoque}"></div>
               </div>
+
               <div class="col-md-6 mb-3">
-                <label class="form-label">Imagem</label
-                ><input
+                <label class="form-label">Imagem</label>
+                <input
                   type="text"
                   class="form-control"
                   th:field="*{imagem}"
@@ -95,50 +119,95 @@
                 />
               </div>
             </div>
+
             <button type="submit" class="btn btn-cupcake">
               Salvar Produto
             </button>
           </form>
         </div>
       </div>
+
+      <!-- Produtos cadastrados -->
       <div class="card shadow">
         <div class="card-header">
           <h5 class="mb-0">Produtos Cadastrados</h5>
         </div>
+
         <div class="card-body table-responsive">
-          <table class="table table-striped table-hover">
+          <table class="table table-striped table-hover align-middle">
             <thead>
               <tr>
                 <th>ID</th>
                 <th>Nome</th>
                 <th>Preço</th>
                 <th>Estoque</th>
+                <th>Status</th>
                 <th>Ações</th>
               </tr>
             </thead>
+
             <tbody>
               <tr th:each="produto : ${produtos}">
                 <td th:text="${produto.id}"></td>
+
                 <td th:text="${produto.nome}"></td>
+
                 <td>
                   R$
                   <span
                     th:text="${#numbers.formatDecimal(produto.preco,1,'POINT',2,'COMMA')}"
                   ></span>
                 </td>
+
                 <td th:text="${produto.estoque}"></td>
+
+                <!-- Status -->
                 <td>
-                  <a
-                    class="btn btn-warning btn-sm"
-                    th:href="@{/admin/produtos/editar/{id}(id=${produto.id})}"
-                    >Editar</a
+                  <span
+                    th:if="${produto.ativo}"
+                    class="badge bg-success"
                   >
-                  <a
-                    class="btn btn-danger btn-sm"
-                    th:href="@{/admin/produtos/excluir/{id}(id=${produto.id})}"
-                    onclick="return confirmarExclusao();"
-                    >Excluir</a
+                    Ativo
+                  </span>
+
+                  <span
+                    th:unless="${produto.ativo}"
+                    class="badge bg-secondary"
                   >
+                    Inativo
+                  </span>
+                </td>
+
+                <!-- Ações -->
+                <td>
+                  <div class="d-flex gap-2">
+                    <a
+                      class="btn btn-warning btn-sm"
+                      th:href="@{/admin/produtos/editar/{id}(id=${produto.id})}"
+                    >
+                      Editar
+                    </a>
+
+                    <form
+                      th:action="@{/admin/produtos/status/{id}(id=${produto.id})}"
+                      method="post"
+                      onsubmit="return confirm('Deseja realmente alterar o status deste produto?');"
+                    >
+                      <button
+                        type="submit"
+                        class="btn btn-sm"
+                        th:classappend="${produto.ativo} ? 'btn-danger' : 'btn-success'"
+                        th:text="${produto.ativo} ? 'Desativar' : 'Ativar'"
+                      >
+                      </button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+
+              <tr th:if="${#lists.isEmpty(produtos)}">
+                <td colspan="6" class="text-center">
+                  Nenhum produto cadastrado.
                 </td>
               </tr>
             </tbody>
@@ -146,11 +215,13 @@
         </div>
       </div>
     </div>
+
     <footer class="footer mt-5">
       <div class="container text-center py-3">
         <p class="mb-0">&copy; 2026 Cupcake Store</p>
       </div>
     </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
     <script th:src="@{/js/script.js}"></script>
   </body>

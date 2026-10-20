@@ -39,6 +39,17 @@ public class Produto {
     @Column(length = 255)
     private String imagem;
 
+    @Column(nullable = false)
+    private boolean ativo = true;
+
+    public boolean isAtivo() {
+    return ativo;
+}
+
+public void setAtivo(boolean ativo) {
+    this.ativo = ativo;
+}
+
     public Produto() {}
 
     public Long getId() { return id; }

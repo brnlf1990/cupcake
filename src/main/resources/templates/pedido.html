@@ -1,9 +1,100 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Pedido - Cupcake Store</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" th:href="@{/css/style.css}"></head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-dark shadow"><div class="container"><a class="navbar-brand fw-bold" th:href="@{/}">🧁 Cupcake Store</a><div class="ms-auto"><a class="nav-link d-inline-block" th:href="@{/carrinho}">Carrinho</a><a class="nav-link d-inline-block" th:href="@{/}">Início</a></div></div></nav>
-<div class="container mt-5"><h2 class="text-center mb-4">Resumo do Pedido</h2><div th:if="${sucesso}" class="alert alert-success" th:text="${sucesso}"></div><div th:if="${erro}" class="alert alert-danger" th:text="${erro}"></div><div th:if="${#lists.isEmpty(itens)}" class="alert alert-warning">Não há itens para finalizar o pedido.</div>
-<div th:unless="${#lists.isEmpty(itens)}"><div class="table-responsive"><table class="table table-striped table-bordered"><thead class="table-light"><tr><th>Produto</th><th>Quantidade</th><th>Preço Unitário</th><th>Subtotal</th></tr></thead><tbody><tr th:each="item : ${itens}"><td th:text="${item.produto.nome}">Produto</td><td th:text="${item.quantidade}">1</td><td>R$ <span th:text="${#numbers.formatDecimal(item.precoUnitario,1,'POINT',2,'COMMA')}">0,00</span></td><td>R$ <span th:text="${#numbers.formatDecimal(item.subtotal,1,'POINT',2,'COMMA')}">0,00</span></td></tr></tbody></table></div><div class="text-end mb-4"><h4>Total: R$ <span class="text-success" th:text="${#numbers.formatDecimal(total,1,'POINT',2,'COMMA')}">0,00</span></h4></div><div class="card"><div class="card-header"><h5 class="mb-0">Pagamento</h5></div><div class="card-body"><p>Para este projeto, o pagamento é apenas simulado.</p><form th:action="@{/pedido/finalizar}" method="post"><button type="submit" class="btn btn-success">Confirmar Pagamento</button><a th:href="@{/carrinho}" class="btn btn-secondary">Voltar ao Carrinho</a></form></div></div></div></div>
-<footer class="footer mt-5"><div class="container text-center py-3"><p class="mb-0">&copy; 2026 Cupcake Store</p></div></footer><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script><script th:src="@{/js/script.js}"></script>
-</body></html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pedido - Cupcake Store</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark shadow">
+      <div class="container">
+        <a class="navbar-brand fw-bold" th:href="@{/}">🧁 Cupcake Store</a>
+        <div class="ms-auto d-flex gap-3">
+          <a class="nav-link" th:href="@{/carrinho}">Carrinho</a
+          ><a class="nav-link" th:href="@{/}">Início</a>
+        </div>
+      </div>
+    </nav>
+    <div class="container mt-5">
+      <h2 class="text-center mb-4">Resumo do Pedido</h2>
+      <div
+        th:if="${sucesso}"
+        class="alert alert-success"
+        th:text="${sucesso}"
+      ></div>
+      <div th:if="${erro}" class="alert alert-danger" th:text="${erro}"></div>
+      <div th:if="${#lists.isEmpty(itens)}" class="alert alert-warning">
+        Não há itens para finalizar o pedido.
+      </div>
+      <div th:unless="${#lists.isEmpty(itens)}">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered">
+            <thead class="table-light">
+              <tr>
+                <th>Produto</th>
+                <th>Quantidade</th>
+                <th>Preço Unitário</th>
+                <th>Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="item : ${itens}">
+                <td th:text="${item.produto.nome}">Produto</td>
+                <td th:text="${item.quantidade}">1</td>
+                <td>
+                  R$
+                  <span
+                    th:text="${#numbers.formatDecimal(item.precoUnitario,1,'POINT',2,'COMMA')}"
+                    >0,00</span
+                  >
+                </td>
+                <td>
+                  R$
+                  <span
+                    th:text="${#numbers.formatDecimal(item.subtotal,1,'POINT',2,'COMMA')}"
+                    >0,00</span
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="text-end mb-4">
+          <h4>
+            Total: R$
+            <span
+              class="text-success"
+              th:text="${#numbers.formatDecimal(total,1,'POINT',2,'COMMA')}"
+              >0,00</span
+            >
+          </h4>
+        </div>
+        <div class="card">
+          <div class="card-header"><h5 class="mb-0">Pagamento</h5></div>
+          <div class="card-body">
+            <p>Para este projeto, o pagamento é apenas simulado.</p>
+            <form th:action="@{/pedido/finalizar}" method="post">
+              <button type="submit" class="btn btn-success">
+                Confirmar Pagamento</button
+              ><a th:href="@{/carrinho}" class="btn btn-secondary"
+                >Voltar ao Carrinho</a
+              >
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="footer mt-5">
+      <div class="container text-center py-3">
+        <p class="mb-0">&copy; 2026 Cupcake Store</p>
+      </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/script.js}"></script>
+  </body>
+</html>
